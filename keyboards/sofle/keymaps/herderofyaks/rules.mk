@@ -1,3 +1,6 @@
+# Bootloader selection
+BOOTLOADER = rp2040
+
 MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 CONSOLE_ENABLE = no
@@ -6,3 +9,8 @@ ENCODER_ENABLE = yes
 LTO_ENABLE = yes
 OLED_ENABLE = yes
 OLED_DRIVER = SSD1306
+
+CONVERT_TO=elite_pi
+CAPS_WORD_ENABLE = yes
+
+TAP_DANCE_ENABLE = yes

@@ -82,7 +82,19 @@ enum custom_keycodes {
     KC_LOWER,
     KC_RAISE,
     KC_ADJUST,
-    KC_D_MUTE
+    KC_D_MUTE,
+    CODEBRACKET,
+};
+
+// Tap Dance declarations
+enum {
+    TD_SLASH_SLASH,
+};
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Forward Slash, twice for backslash
+    [TD_SLASH_SLASH] = ACTION_TAP_DANCE_DOUBLE(KC_SLSH, KC_BACKSLASH),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -103,15 +115,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_QWERTY] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             LT(_SWITCH,KC_6), KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
+  QK_GESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,     KC_7,   KC_8,    KC_9,    KC_0,    KC_EQL,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
+  LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_MINS,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_LSFT,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  KC_LCTL,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  LT(_SWITCH,KC_D_MUTE),KC_N,    KC_M,   KC_COMM, KC_DOT,  TD(TD_SLASH_SLASH), KC_LSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                 KC_BSPC, KC_LGUI, KC_LOWER, KC_SPC,  KC_ENT   ,     KC_SPC, KC_ENT ,  KC_RAISE, KC_RCTL, KC_RALT
+                 KC_LALT, KC_INS, KC_LOWER, KC_LGUI,  KC_BSPC,     KC_ENT, KC_SPC,  KC_RAISE, KC_LBRC, KC_RBRC
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
@@ -191,13 +203,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                    ,---------------------------------------------------.
   _______,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   KC_BSPC,
+  KC_GRV,   KC_NO,   KC_NO,    KC_NO,    KC_NO,    KC_NO,                 KC_NO,    KC_HOME,    KC_UP,    KC_END,    KC_PGUP,   KC_DEL,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_U, KC_PGUP,                   KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_NO,   KC_DEL,
+  _______,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    KC_NO,                   KC_NO,     KC_LEFT, KC_DOWN,  KC_RGHT, KC_PGDN,   KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_D, KC_PGDN,_______,    _______,KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    _______,
+  _______,  KC_NO,  KC_NO,   KC_NO,   KC_NO, KC_NO,_______,    _______,KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    _______,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                 _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
+                 _______, _______, _______, _______, _______,     _______, _______, _______, CODEBRACKET, _______
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 /* RAISE
@@ -526,6 +538,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(mod_config(MOD_MEH));
                 unregister_code(KC_UP);
             }
+            return false;
+        case CODEBRACKET:
+            if (record->event.pressed) {
+                // when keycode CODEBRACKET is pressed
+                SEND_STRING("{" SS_TAP(X_ENT) SS_TAP(X_TAB) SS_TAP(X_ENT) "}" SS_TAP(X_UP));
+            } else {
+                // when keycode CODEBRACKET is released
+            }
+            break;
     }
     return true;
 }
