@@ -23,8 +23,8 @@
 ///https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 
 
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+/// #define MASTER_LEFT
+#define MASTER_RIGHT
 // #define EE_HANDS
 
 #define CUSTOM_FONT
@@ -41,9 +41,9 @@
 #define ENCODER_DIRECTION_FLIP
 
 
-#define RGBLIGHT_SLEEP
+///#define RGBLIGHT_SLEEP
 //
-#define RGBLIGHT_LAYERS
+///#define RGBLIGHT_LAYERS
 
 /* ws2812 RGB LED */
 #define RGB_DI_PIN D3
