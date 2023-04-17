@@ -17,3 +17,4 @@ Features:
 - Left encoder controls volume up/down/mute. Right encoder PGUP/PGDOWN.
 
 
+qmk compile -kb sofle/rev1 -km herderofyaks

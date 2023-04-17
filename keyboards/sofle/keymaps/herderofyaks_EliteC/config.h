@@ -27,6 +27,8 @@
 #define MASTER_RIGHT
 // #define EE_HANDS
 
+#define SPLIT_USB_DETECT
+
 #define CUSTOM_FONT
 
 #define CUSTOM_LAYER_READ //if you remove this it causes issues - needs better guarding
