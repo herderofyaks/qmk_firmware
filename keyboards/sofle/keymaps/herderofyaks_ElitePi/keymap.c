@@ -52,6 +52,8 @@
 #define SET_THUMB_CLUSTER(hsv) 	\
 	{25, 2, hsv}, \
 	  {35+ 25, 2, hsv}
+
+/*
 #define SET_LAYER_ID(hsv) 	\
 	{0, 1, HSV_OVERRIDE_HELP(hsv, INDICATOR_BRIGHTNESS)}, \
     {35+0, 1, HSV_OVERRIDE_HELP(hsv, INDICATOR_BRIGHTNESS)}, \
@@ -62,12 +64,13 @@
 		{25, 2, hsv}, \
 	  {35+ 25, 2, hsv}
 
+*/
 
 enum sofle_layers {
     _DEFAULTS = 0,
     _QWERTY = 0,
     _COLEMAK,
-	  _COLEMAKDH,
+	_COLEMAKDH,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -78,7 +81,7 @@ enum sofle_layers {
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_COLEMAK,
-	  KC_COLEMAKDH,
+    KC_COLEMAKDH,
     KC_LOWER,
     KC_RAISE,
     KC_ADJUST,
