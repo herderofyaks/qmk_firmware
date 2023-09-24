@@ -35,6 +35,8 @@
     #define TAPPING_TERM 200
 #endif
 
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+
 #define ENCODER_DIRECTION_FLIP
 
 /* ws2812 RGB LED */

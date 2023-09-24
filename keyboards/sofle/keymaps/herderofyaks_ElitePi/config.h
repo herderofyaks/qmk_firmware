@@ -39,6 +39,7 @@
     #undef TAPPING_TERM
     #define TAPPING_TERM 200
 #endif
+
 #define ENCODER_DIRECTION_FLIP
 
 
@@ -48,7 +49,6 @@
 
 /* ws2812 RGB LED */
 #define RGB_DI_PIN D3
-
 
 #ifdef RGB_MATRIX_ENABLE
 #define RGBLED_NUM 35    // Number of LEDs
