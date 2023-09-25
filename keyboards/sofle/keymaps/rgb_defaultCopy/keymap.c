@@ -31,10 +31,6 @@
 #define SET_UNDERGLOW(hsv) \
 	{1, 6, hsv}, \
     {35+1, 6,hsv}
-#define SET_NUMPAD(hsv)     \
-	{35+15, 5, hsv},\
-	  {35+22, 3, hsv},\
-	  {35+27, 3, hsv}
 #define SET_NUMROW(hsv) \
 	{10, 2, hsv}, \
 		{20, 2, hsv}, \
@@ -69,8 +65,6 @@ enum sofle_layers {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _NUMPAD,
-    _SWITCH
 };
 
 enum custom_keycodes {
@@ -113,11 +107,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                    ,---------------------------------------------------.
   QK_GESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,     KC_7,   KC_8,    KC_9,    KC_0,    KC_EQL,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_MINS,
+  KC_TAB,KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_MINS,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_PSCR,  LT(_SWITCH,KC_D_MUTE),KC_N,    KC_M,   KC_COMM, KC_DOT,  TD(TD_SLASH_SLASH), KC_LSFT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_PSCR,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  TD(TD_SLASH_SLASH), KC_LSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_LALT, KC_INS, KC_RAISE, KC_BSPC,  KC_LGUI,     KC_ENT, KC_SPC,  KC_LOWER, KC_LBRC, KC_RBRC
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -192,15 +186,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_ADJUST] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  EE_CLR,  KC_NO, BL_ON, BL_UP, KC_NO, KC_NO,                            RGB_MOD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                 KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  QK_BOOT, BL_STEP,BL_OFF, BL_DOWN, KC_NO, KC_NO,                        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+  KC_NO, RGB_SPI, RGB_VAI, RGB_MOD, RGB_HUI, RGB_SAI,                       KC_VOLU, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO, KC_NO,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  RGB_TOG, RGB_HUI,RGB_SAI, RGB_VAI, KC_NO, KC_NO,                       C(G(KC_LEFT)),KC_NO,KC_NO,C(G(KC_RGHT)),KC_NO, KC_NO,
+  KC_NO, RGB_SPD, RGB_VAD, RGB_RMOD, RGB_HUD, RGB_SAD,                      KC_VOLD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  RGB_MOD, RGB_HUD,RGB_SAD, RGB_VAD, KC_NO,KC_QWERTY,KC_NO,       KC_NO, KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO, KC_NO,
+  KC_NO, KC_NO, KC_NO, RGB_TOG, KC_NO, KC_NO, KC_NO,                 KC_NO, KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 };
@@ -234,16 +228,6 @@ const rgblight_segment_t PROGMEM layer_command_lights[] = RGBLIGHT_LAYER_SEGMENT
   SET_LAYER_ID(HSV_PURPLE)
 );
 
-//_NUMPAD
-const rgblight_segment_t PROGMEM layer_numpad_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-	SET_INDICATORS(HSV_ORANGE),
-    SET_UNDERGLOW(HSV_ORANGE),
-	SET_NUMPAD(HSV_BLUE),
-    {7, 4, HSV_ORANGE},
-    {25, 2, HSV_ORANGE},
-    {35+6, 4, HSV_ORANGE},
-    {35+25, 2, HSV_ORANGE}
-    );
 // _SWITCHER   // light up top row
 const rgblight_segment_t PROGMEM layer_switcher_lights[] = RGBLIGHT_LAYER_SEGMENTS(
 	SET_LAYER_ID(HSV_GREEN),
@@ -256,7 +240,6 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 	layer_num_lights,// overrides layer 1
 	layer_symbol_lights,
     layer_command_lights,
-	layer_numpad_lights,
 	layer_switcher_lights,  // Overrides other layers
 );
 
